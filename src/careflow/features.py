@@ -1,4 +1,6 @@
 
+from unittest import result
+
 import pandas as pd
 
 
@@ -16,7 +18,7 @@ NUMERIC_FEATURES = [
 CATEGORICAL_FEATURES = [
     "SEX",
     "RESIDNCE",
-    "CATRIAGE",
+    "IMMEDR",
     "VMONTH",
     "VDAYR",
 ]
@@ -45,6 +47,16 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
         result[column] = values.replace(
             [-7, -8, -9], float("nan")
         )
+
+     # CDC NHAMCS 2022 vital-sign coding corrections
+    result["TEMPF"] = result["TEMPF"] / 10.0
+    result["PULSE"] = result["PULSE"].replace(998, float("nan"))
+    result["BPDIAS"] = result["BPDIAS"].replace(998, float("nan"))
+
+    # Retain documented 1–5 triage levels for the initial model
+    result["IMMEDR"] = result["IMMEDR"].where(
+        result["IMMEDR"].isin([1, 2, 3, 4, 5])
+    )
 
     arrival = df["ARRTIME"].apply(
         lambda value: (
