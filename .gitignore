@@ -7,3 +7,9 @@ data/raw/
 *.db
 node_modules/
 dist/
+
+# Generated data and build artifacts
+data/processed/
+*.parquet
+*.egg-info/
+build/
