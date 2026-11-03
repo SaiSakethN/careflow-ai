@@ -17,3 +17,6 @@ build/
 # Generated machine-learning artifacts
 artifacts/*.joblib
 artifacts/*.pkl
+
+frontend/node_modules/
+frontend/dist/
