@@ -14,7 +14,7 @@ data/processed/
 *.egg-info/
 build/
 
-# Generated machine-learning artifacts
+# Generated model artifacts remain ignored by default
 artifacts/*.joblib
 artifacts/*.pkl
 
