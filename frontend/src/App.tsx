@@ -14,6 +14,8 @@ import {
 } from 'lucide-react'
 
 import Prediction from './pages/Prediction'
+import Performance from './pages/Performance'
+import Research from './pages/Research'
 import './App.css'
 
 type Page = 'overview' | 'prediction' | 'performance' | 'about'
@@ -129,6 +131,7 @@ function App() {
         </header>
 
         <main className="content">
+          {/* RESEARCH OVERVIEW */}
           {page === 'overview' && (
             <>
               <div className="page-heading">
@@ -183,9 +186,7 @@ function App() {
                 <div className="metric-card">
                   <span>Eligible ED visits</span>
                   <strong>15,919</strong>
-                  <small>
-                    After target eligibility filtering
-                  </small>
+                  <small>After target eligibility filtering</small>
                 </div>
 
                 <div className="metric-card">
@@ -197,9 +198,7 @@ function App() {
                 <div className="metric-card">
                   <span>Validation ROC-AUC</span>
                   <strong>0.8375</strong>
-                  <small>
-                    Hospital-disjoint validation split
-                  </small>
+                  <small>Hospital-disjoint validation split</small>
                 </div>
 
                 <div className="metric-card">
@@ -255,33 +254,14 @@ function App() {
             </>
           )}
 
+          {/* ADMISSION PREDICTION */}
           {page === 'prediction' && <Prediction />}
 
-          {(page === 'performance' || page === 'about') && (
-            <section className="placeholder-page">
-              <div className="placeholder-icon">
-                {page === 'performance' ? (
-                  <BarChart3 size={30} />
-                ) : (
-                  <ShieldAlert size={30} />
-                )}
-              </div>
+          {/* MODEL PERFORMANCE */}
+          {page === 'performance' && <Performance />}
 
-              <h1>{pageTitles[page]}</h1>
-
-              <p>
-                This workspace is being implemented in the next stage
-                of the CareFlow AI frontend.
-              </p>
-
-              <button
-                className="secondary-button"
-                onClick={() => navigate('overview')}
-              >
-                Return to overview
-              </button>
-            </section>
-          )}
+          {/* RESEARCH & LIMITATIONS */}
+          {page === 'about' && <Research />}
         </main>
       </div>
     </div>
