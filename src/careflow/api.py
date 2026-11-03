@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from careflow.features import build_features
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path.cwd()
 ARTIFACT_DIR = ROOT / "artifacts"
 METADATA_PATH = ARTIFACT_DIR / "model_metadata.json"
 MODEL_PATH = ARTIFACT_DIR / "admission_xgboost.joblib"
