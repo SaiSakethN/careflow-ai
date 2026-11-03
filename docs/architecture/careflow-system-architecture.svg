@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1760" viewBox="0 0 1600 1760">
+<defs>
+ <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#64748b"/></marker>
+ <style>
+ text{font-family:Arial,Helvetica,sans-serif;fill:#e9f2fc}
+ .title{font-size:42px;font-weight:700} .sub{font-size:19px;fill:#a9bdd2}
+ .heading{font-size:23px;font-weight:700} .detail{font-size:17px;fill:#c0d1e2}
+ .tiny{font-size:15px;fill:#9db6cc} .section{font-size:21px;font-weight:700;fill:#67e8f9}
+ .box{fill:#16283c;stroke:#39536b;stroke-width:2} .accent{fill:#123b47;stroke:#29b6c9;stroke-width:2}
+ .line{stroke:#829bb1;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+ </style>
+</defs>
+<rect width="1600" height="1760" fill="#091725"/>
+<text x="80" y="85" class="title">CareFlow AI  |  End-to-End System Architecture</text>
+<text x="80" y="122" class="sub">CDC NHAMCS 2022 • Hospital-disjoint ML research • FastAPI + React • Verified local MVP</text>
+<line x1="80" y1="148" x2="1520" y2="148" stroke="#375267" stroke-width="2"/>
+
+<text x="80" y="194" class="section">A  /  DATA &amp; FEATURE PIPELINE</text>
+<rect x="80" y="218" width="440" height="125" rx="15" class="accent"/>
+<text x="100" y="252" class="heading">01  Data source</text>
+<text x="100" y="282" class="detail">CDC NHAMCS 2022 ED public-use SAS</text>
+<text x="100" y="307" class="detail">16,025 visits · 913 raw columns</text>
+<rect x="580" y="218" width="440" height="125" rx="15" class="box"/>
+<text x="600" y="252" class="heading">02  Ingestion &amp; audit</text>
+<text x="600" y="282" class="detail">Python · pandas · pyreadstat</text>
+<text x="600" y="307" class="detail">SAS parsing, missingness, schema checks</text>
+<rect x="1080" y="218" width="440" height="125" rx="15" class="box"/>
+<text x="1100" y="252" class="heading">03  Target &amp; features</text>
+<text x="1100" y="282" class="detail">pandas · NumPy · custom preprocessing</text>
+<text x="1100" y="307" class="detail">15,919 eligible visits · 14 model features</text>
+<path d="M520,280 L575,280" class="line"/>
+<path d="M1020,280 L1075,280" class="line"/>
+<text x="80" y="405" class="section">B  /  OFFLINE MODEL DEVELOPMENT</text>
+<rect x="80" y="430" width="1440" height="115" rx="15" class="accent"/>
+<text x="100" y="464" class="heading">04  Hospital-grouped split</text>
+<text x="100" y="494" class="detail">scikit-learn GroupShuffleSplit · HOSPCODE grouping · random_state=42</text>
+<text x="100" y="519" class="detail">Mutually exclusive hospitals across train / validation / held-out test</text>
+<path d="M320,545 L320,591" class="line"/>
+<path d="M800,545 L800,591" class="line"/>
+<path d="M1280,545 L1280,591" class="line"/>
+<rect x="80" y="596" width="440" height="140" rx="15" class="box"/>
+<text x="100" y="630" class="heading">TRAIN  ·  11,390 visits / 131 hospitals</text>
+<text x="100" y="660" class="detail">05  Imputation + one-hot encoding</text>
+<text x="100" y="685" class="detail">scikit-learn Pipeline · XGBoost classifier</text>
+<rect x="580" y="596" width="440" height="140" rx="15" class="box"/>
+<text x="600" y="630" class="heading">VALIDATION  ·  2,128 visits / 28 hospitals</text>
+<text x="600" y="660" class="detail">06  ROC-AUC 0.8375 · PR-AUC 0.3952</text>
+<text x="600" y="685" class="detail">Precision 0.3333 · Recall 0.6723 · F1 0.4457</text>
+<rect x="1080" y="596" width="440" height="140" rx="15" class="box"/>
+<text x="1100" y="630" class="heading">TEST  ·  2,401 visits / 29 hospitals</text>
+<text x="1100" y="660" class="detail">Final held-out evaluation PENDING</text>
+<text x="1100" y="685" class="detail">Not used for tuning or metric claims</text>
+<path d="M300,736 L300,800" class="line"/>
+<path d="M800,736 L800,800" class="line"/>
+<rect x="80" y="805" width="680" height="120" rx="15" class="accent"/>
+<text x="100" y="839" class="heading">07  Frozen trained model</text>
+<text x="100" y="869" class="detail">joblib artifact · model_metadata.json</text>
+<text x="100" y="894" class="detail">XGBoost pipeline · classification threshold 0.20</text>
+<rect x="820" y="805" width="700" height="120" rx="15" class="box"/>
+<text x="840" y="839" class="heading">08  Model interpretation</text>
+<text x="840" y="869" class="detail">SHAP feature importance chart</text>
+<text x="840" y="894" class="detail">Retrospective validation · probabilities uncalibrated</text>
+<path d="M760,865 L815,865" class="line"/>
+<text x="80" y="1000" class="section">C  /  LOCAL INFERENCE &amp; USER EXPERIENCE</text>
+<rect x="80" y="1025" width="680" height="142" rx="15" class="accent"/>
+<text x="100" y="1059" class="heading">09  FastAPI inference service</text>
+<text x="100" y="1089" class="detail">FastAPI · Pydantic · Uvicorn</text>
+<text x="100" y="1114" class="detail">POST /predict · GET /health · GET /model/info</text>
+<text x="100" y="1139" class="detail">Input validation → build_features → predict_proba</text>
+<rect x="820" y="1025" width="700" height="142" rx="15" class="accent"/>
+<text x="840" y="1059" class="heading">10  React research dashboard</text>
+<text x="840" y="1089" class="detail">React · TypeScript · Vite · Lucide</text>
+<text x="840" y="1114" class="detail">Overview · Prediction · Performance · Research</text>
+<text x="840" y="1139" class="detail">Synthetic demo cases only · no patient data</text>
+<path d="M300,925 L300,1020" class="line"/>
+<path d="M820,1095 L765,1095" class="line"/>
+<text x="772" y="1082" class="tiny" text-anchor="middle">HTTP</text>
+<text x="80" y="1235" class="section">D  /  QUALITY, DELIVERY &amp; RESPONSIBLE USE</text>
+<rect x="80" y="1260" width="440" height="140" rx="15" class="box"/>
+<text x="100" y="1294" class="heading">11  Backend verification</text>
+<text x="100" y="1324" class="detail">pytest · FastAPI TestClient</text>
+<text x="100" y="1349" class="detail">19 passing tests (latest verified)</text>
+<text x="100" y="1374" class="detail">Data, features, API behavior</text>
+<rect x="580" y="1260" width="440" height="140" rx="15" class="box"/>
+<text x="600" y="1294" class="heading">12  Frontend verification</text>
+<text x="600" y="1324" class="detail">TypeScript compiler · Vite production build</text>
+<text x="600" y="1349" class="detail">Local UI and prediction form verified</text>
+<text x="600" y="1374" class="detail">Frontend / backend run separately</text>
+<rect x="1080" y="1260" width="440" height="140" rx="15" class="box"/>
+<text x="1100" y="1294" class="heading">13  Source &amp; delivery</text>
+<text x="1100" y="1324" class="detail">Git · GitHub · documented setup</text>
+<text x="1100" y="1349" class="detail">Public deployment PLANNED</text>
+<text x="1100" y="1374" class="detail">No verified CI/CD or Docker deployment</text>
+<rect x="80" y="1455" width="1440" height="150" rx="15" class="accent"/>
+<text x="100" y="1489" class="heading">RESEARCH-ONLY SAFETY BOUNDARY</text>
+<text x="100" y="1519" class="detail">Retrospective observational survey data · not clinically validated · no prospective testing</text>
+<text x="100" y="1544" class="detail">No individual clinical-risk interpretation · no medical decisions · do not enter real patient information</text>
+<text x="80" y="1660" class="sub">Solid arrows show implemented data/model/application flow. Held-out evaluation and public hosting remain pending.</text>
+<text x="80" y="1695" class="tiny">CareFlow AI · Architecture reflects the verified local implementation, not a production clinical system.</text>
+</svg>
