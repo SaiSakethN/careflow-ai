@@ -1,4 +1,6 @@
 # CareFlow AI
+
+![CareFlow AI: Hospital-grouped evaluation for retrospective ML research.](docs/assets/engineering-banner.svg)
 ### Emergency Department Admission Prediction & ML Research Platform
 
 An end-to-end machine learning research platform for investigating hospital admission outcomes using emergency department visit data from the **2022 CDC National Hospital Ambulatory Medical Care Survey (NHAMCS)**.
@@ -10,6 +12,18 @@ CareFlow AI combines reproducible data preparation, hospital-grouped model evalu
 **Research disclaimer:** This is an educational and retrospective research project. It is not clinically validated and must not be used to guide patient admission, discharge, treatment, or other clinical decisions.
 
 ---
+
+## Engineering review at a glance
+
+| Question | Evidence and boundary |
+| --- | --- |
+| Where does the data come from? | CDC NHAMCS 2022 emergency department public-use SAS data; see [target definition](docs/target-definition.md). |
+| How is leakage reduced? | `src/careflow/split.py` uses hospital groups and asserts disjoint hospital sets. Preprocessing is fit through the training pipeline. |
+| What is evaluated? | `src/careflow/train_xgboost.py` evaluates train and validation data; the held-out test partition remains untouched. |
+| What is served? | A generated local model artifact through FastAPI and a React research dashboard; no public deployment is claimed. |
+| What remains open? | Final test evaluation, calibration, subgroup audits and external validation. SHAP attribution does not establish causation. |
+
+Read the research disclaimer before running the application. The architecture and setup below describe implemented local workflows without turning validation results into a clinical claim.
 
 ## 1. Project Overview
 
